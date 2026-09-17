@@ -6,6 +6,8 @@ import { PatternsPage } from "@/pages/PatternsPage";
 import { DeadPage } from "@/pages/DeadPage";
 import { GraphPage } from "@/pages/GraphPage";
 import { DiffPage } from "@/pages/DiffPage";
+import { HotspotsPage } from "@/pages/HotspotsPage";
+import { SearchPage } from "@/pages/SearchPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,8 @@ export const router = createBrowserRouter([
       { path: "/dead", element: <DeadPage /> },
       { path: "/patterns", element: <PatternsPage /> },
       { path: "/diff", element: <DiffPage /> },
+      { path: "/hotspots", element: <HotspotsPage /> },
+      { path: "/search", element: <SearchPage /> },
     ],
   },
 ]);

@@ -12,6 +12,8 @@ const NAV = [
   { to: "/dead", label: "Poços Mortos", icon: Bug },
   { to: "/patterns", label: "Padrões", icon: Search },
   { to: "/diff", label: "Diff", icon: Search },
+  { to: "/hotspots", label: "Hotspots", icon: Bug },
+  { to: "/search", label: "Busca", icon: Search },
 ] as const;
 
 export function Shell() {

@@ -4,9 +4,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from cascudo_core.analyzers import build_flow, find_clusters, find_critical, find_cycles, find_dead
+from cascudo_core.analyzers import build_flow, find_clusters, find_critical, find_cycles, find_dead, find_hotspots
 from cascudo_core.diff import diff_graphs
 from cascudo_core.patterns.miner import mine_patterns
+from cascudo_core.search import search_symbols
 
 from ..auth.jwt import get_workspace_id
 from ..store import get_store
@@ -142,6 +143,27 @@ async def clusters_view(snapshot_id: str, workspace_id: str = Depends(get_worksp
     except KeyError:
         raise HTTPException(404, "snapshot não encontrado")
     return {"clusters": find_clusters(g), "count": len(find_clusters(g))}
+
+
+@router.get("/snapshots/{snapshot_id}/hotspots")
+async def hotspots_view(snapshot_id: str, workspace_id: str = Depends(get_workspace_id)) -> dict:
+    store = get_store()
+    try:
+        g = await store.load_graph(snapshot_id)
+    except KeyError:
+        raise HTTPException(404, "snapshot não encontrado")
+    return {"hotspots": find_hotspots(g), "explain": "score=churn×CC, p90 vs mediana — sem IA, só git log + CC"}
+
+
+@router.get("/snapshots/{snapshot_id}/search")
+async def search_view(snapshot_id: str, q: str = "", workspace_id: str = Depends(get_workspace_id), limit: int = 20) -> dict:
+    store = get_store()
+    try:
+        g = await store.load_graph(snapshot_id)
+    except KeyError:
+        raise HTTPException(404, "snapshot não encontrado")
+    hits = search_symbols(g, q, limit=limit)
+    return {"query": q, "hits": hits, "count": len(hits), "via": "regex+trigram, 0 IA"}
 
 
 @router.get("/snapshots/{snapshot_id}/export")
