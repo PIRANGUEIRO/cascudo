@@ -4,7 +4,8 @@
   "features": {
     "ghcr.io/devcontainers/features/python:1": { "version": "3.12" },
     "ghcr.io/devcontainers/features/node:1": { "version": "20" },
-    "ghcr.io/devcontainers/features/go:1": { "version": "1.22" }
+    "ghcr.io/devcontainers/features/go:1": { "version": "1.22" },
+    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" }
   },
   "customizations": {
     "vscode": {
@@ -27,7 +28,8 @@
     "8000": { "label": "API FastAPI", "onAutoForward": "notify" },
     "5173": { "label": "Web Vite", "onAutoForward": "openPreview" }
   },
-  "postCreateCommand": "pip install -e .[dev] && pnpm install --prefix app/web || npm install --prefix app/web",
+  "postCreateCommand": "pip install -e .[dev] && npm --prefix app/web ci && npm --prefix app/web run build || npm install --prefix app/web",
+  "postStartCommand": "nohup bash -c 'PYTHONPATH=$PWD uvicorn app.api.main:app --host 0.0.0.0 --port 8000 --log-level info > /tmp/api.log 2>&1 & echo $! > /tmp/api.pid; npm --prefix app/web run dev -- --host 0.0.0.0 --port 5173 > /tmp/web.log 2>&1 & echo started' || true",
   "remoteEnv": {
     "PYTHONPATH": "${containerWorkspaceFolder}"
   }
