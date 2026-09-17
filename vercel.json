@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "app/web/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "https://cascudo-api.fly.dev/api/$1" },
+    { "src": "/(.*)", "dest": "/app/web/dist/$1" }
+  ],
+  "buildCommand": "npm --prefix app/web ci && npm --prefix app/web run build",
+  "outputDirectory": "app/web/dist",
+  "installCommand": "pip install -e .[dev] || true",
+  "framework": "vite"
+}

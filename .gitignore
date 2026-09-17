@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+dist/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+app/web/dist/
+app/web/node_modules/
+
+# DB / blobs
+data/
+.cascudo/
+*.db
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# R2 / uploads
+uploads/

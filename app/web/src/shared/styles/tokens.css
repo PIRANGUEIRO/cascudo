@@ -1,0 +1,61 @@
+/* Mateboard Design System — tokens globais para Cascudo
+   Shell: SaaS (Sidebar + Topbar + Content) | Mode: Analyst | Density: L2-L3
+   Cor = semântica, nunca decoração.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Surfaces — hierarquia grafite */
+  --bg: #0b0d10;
+  --surface: #111418;
+  --surface-2: #181c21;
+  --surface-3: #20252b;
+  --border: #272c33;
+
+  /* Texto */
+  --text: #f3f4f6;
+  --text-secondary: #a7adb7;
+  --text-muted: #6b7280;
+  --text-disabled: #454a52;
+
+  /* Semântica Mateboard */
+  --automation: #3b82f6; /* azul = ação */
+  --intelligence: #8b5cf6; /* violeta = insight */
+  --system: #06b6d4; /* cyan = infra */
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #38bdf8;
+}
+
+* {
+  border-color: var(--border);
+}
+
+/* Scrollbar discreta enterprise */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Microtipografia técnica */
+.mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

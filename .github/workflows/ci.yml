@@ -1,0 +1,16 @@
+name: CI
+on: [pull_request, push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e .[dev]
+      - run: ruff check .
+      - run: pytest -q
+      - name: 0 IA check
+        run: |
+          if grep -r "openai\|from openai\|import llm\|langchain" --include="*.py" .; then echo "0 IA violado"; exit 1; fi
+          echo "0 IA ok"

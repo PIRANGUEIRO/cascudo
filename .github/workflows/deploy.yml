@@ -1,0 +1,19 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -e .[dev] && pytest -q
+      - name: Build web
+        run: npm --prefix app/web ci && npm --prefix app/web run build
+      - name: Docker build
+        run: docker build -t cascudo:ci .
+      - name: Deploy (stub)
+        run: echo "deploy to Render/Fly + Vercel — configure secrets NEON_URL, RENDER_HOOK"
