@@ -8,5 +8,5 @@ app/web/dist
 .vscode
 fixtures
 tests
-*.md
 .env
+!README.md
