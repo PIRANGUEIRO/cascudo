@@ -1,9 +1,16 @@
+import io
+import pathlib
+import zipfile
+
 from fastapi.testclient import TestClient
+
 from app.api.main import app
-import zipfile, io, pathlib
+
+FIXTURES = pathlib.Path(__file__).parents[2] / "fixtures"
+
 
 def test_export_and_ci():
-    p = pathlib.Path("/home/binho/cascudo/fixtures/js-todo")
+    p = FIXTURES / "js-todo"
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w") as z:
         for f in p.rglob("*"):
